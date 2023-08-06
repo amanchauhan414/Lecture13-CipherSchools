@@ -1,0 +1,57 @@
+Using async/await  in javascript 
+
+
+
+
+The async keyword is used to define a function as asynchronous, and the await keyword is used inside an async function to pause execution until a promise is resolved or rejected.
+
+javascript
+Copy code
+async function fetchData() {
+  try {
+    const response = await fetch('https://api.example.com/data'); // Assuming fetch returns a Promise
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+Error Handling:
+You can use try/catch blocks to handle errors within async functions, making it easier to handle exceptions and provide meaningful error messages.
+
+Parallel Asynchronous Operations:
+await allows you to pause execution within an async function until a promise is resolved. This means you can easily perform multiple asynchronous operations in parallel and wait for all of them to complete.
+
+javascript
+Copy code
+async function fetchMultipleData() {
+  try {
+    const [data1, data2] = await Promise.all([
+      fetchData('https://api.example.com/data1'),
+      fetchData('https://api.example.com/data2')
+    ]);
+    console.log('Data 1:', data1);
+    console.log('Data 2:', data2);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+Using async/await with Promises:
+You can use async/await with existing Promise-based APIs. For example, setTimeout returns a Promise-like object, so you can use await with it.
+
+javascript
+Copy code
+async function delayAndLog() {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  console.log('Delayed log after 1 second');
+}
+Executing async Functions:
+To execute an async function, you call it like any other function and can use .then() and .catch() to handle the results.
+
+javascript
+Copy code
+fetchData().then(data => {
+  console.log('Fetched data:', data);
+}).catch(error => {
+  console.error('Error:', error);
